@@ -1,0 +1,29 @@
+version: "3"
+services:
+  # --- Secure Gateway (VPN Tunnel) ---
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - 8090:8090 # Internal Service WebUI
+    environment:
+      - VPN_SERVICE_PROVIDER=custom
+      - VPN_TYPE=wireguard
+      - VPN_PORT_FORWARDING=on
+    restart: always
+
+  # --- Secure Worker Node ---
+  # This container has no direct WAN access.
+  # It routes 100% of traffic through the gluetun network stack.
+  data-ingestion-service:
+    image: alpine:latest # Placeholder for actual service
+    container_name: secure_worker
+    network_mode: "service:gluetun"
+    volumes:
+      - /data/cache:/data/cache
+      - /data/storage:/data/storage
+    restart: unless-stopped

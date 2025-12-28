@@ -48,4 +48,4 @@ The file system maps different physical disks (NVMe & HDD) into a single logical
 * **Networking:** WireGuard, Tailscale (Remote Access)
 
 ---
-*Infrastructure maintained by [Jesper Nilsson](https://github.com/JeNilSE)*
+*Infrastructure maintained by [Me](https://github.com/JeNilSE)*

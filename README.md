@@ -1,7 +1,7 @@
 # Proxmox Secure Gateway Lab
 
 ## 🌄 Project Overview
-This repository documents a secure, home-hosted virtualization environment running on **Proxmox VE**. The project focuses on implementing Zero Trust networking principles, enabling hardware acceleration within containers, and optimizing storage reliability for hybrid (NVMe + USB DAS) setups.
+This repository documents a secure, home hosted virtualization environment running on **Proxmox VE**. The project focuses on implementing Zero Trust networking principles, enabling hardware acceleration within containers, and optimizing storage reliability for hybrid (NVMe + USB DAS) setups.
 
 **Hardware:**
 * **Host:** Dell OptiPlex Micro (Intel Core i5-8500T)
@@ -12,15 +12,15 @@ This repository documents a secure, home-hosted virtualization environment runni
 ## 🔑 Key Implementations
 
 ### 1. Network Isolation
-To secure external traffic, the system creates a "Black Hole" network architecture using `gluetun`.
+To secure external traffic, the system uses `gluetun`.
 * **Implementation:** Sensitive containers share the network stack of the VPN container (`network_mode: service:gluetun`).
 * **Protocol:** WireGuard with **NAT-PMP** enabled to handle dynamic port forwarding requirements from the VPN provider (ProtonVPN).
-* **Security:** Acts as a strictly enforced Kill Switch. If the tunnel drops, all WAN connectivity stops.
+* **Security:** Acts as a Kill Switch. If the tunnel drops, all WAN connectivity stops.
 
 ### 2. Intel QuickSync Passthrough
 To enable decently high media processing and VPN tunneling capabilities within LXC containers, I manually modified the container configuration.
 
-*Configuration snippet (`/etc/pve/lxc/100.conf`):*
+*Configuration (`/etc/pve/lxc/100.conf`):*
 
     # Intel QuickSync Passthrough (Hardware Transcoding)
     lxc.cgroup2.devices.allow: c 226:0 rwm
@@ -48,4 +48,4 @@ The file system maps different physical disks (NVMe & HDD) into a single logical
 * **Networking:** WireGuard, Tailscale (Remote Access)
 
 ---
-*Infrastructure maintained by [Me](https://github.com/JeNilSE)*
+*Made by [Me](https://github.com/JeNilSE)*
